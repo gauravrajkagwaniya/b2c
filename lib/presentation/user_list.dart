@@ -16,9 +16,7 @@ class _UserListState extends State<UserList> {
   bool isLoading = false;
 
   APIService http;
-
   ListUserResponse listUserResponse;
-
   List<User> users;
 
   Future getListUser() async {
@@ -120,11 +118,11 @@ Future deleteUser(String id) async{
                               final user = users[index];
                               return Dismissible(
                                   key: Key(user.id.toString()),
-                                  onDismissed: (direction) async {
-                                    deleteUser(user.id.toString());
-                                    /// todo delete user
-
+                                  /// todo delete user
+                                  confirmDismiss: (direction) async {
+                                    return await dialogDeleteConfirm(user.id.toString());
                                   },
+
                                   background: deleteBg(),
                                   child: Container(
                                     margin: EdgeInsets.only(bottom: 10),
@@ -170,6 +168,54 @@ Future deleteUser(String id) async{
     await Future.delayed(Duration(seconds: 1));
     getListUser();
     return null;
+  }
+  Future dialogDeleteConfirm(String userId) async{
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          elevation: 10,
+          title: Text('Delete User'),
+          titlePadding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+          content:  Text('Are you Sure?'),
+          actions: [
+            Container(
+              width: MediaQuery.of(context).size.width * .90,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                      ),
+                      onTap: () {
+                        deleteUser(userId).whenComplete(() => Navigator.of(context).pop(true));
+                        
+                      }),
+                  InkWell(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.close,
+                          color: Colors.green,
+                        ),
+                      ),
+                      onTap: () {
+                        getListUser();
+                        Navigator.of(context).pop(false);
+                      }),
+                ],
+              ),
+            ),
+          ],
+        )?? false;
+      },
+    );
   }
 
   displaySnackBar(text) {
