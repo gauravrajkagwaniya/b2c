@@ -88,8 +88,14 @@ class _UserListState extends State<UserList> {
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
+            height: MediaQuery
+                .of(context)
+                .size
+                .height,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,
@@ -113,40 +119,40 @@ class _UserListState extends State<UserList> {
                 isLoading
                     ? Center(child: CircularProgressIndicator())
                     : users != null
-                        ? ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: users.length,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              final user = users[index];
-                              return Dismissible(
-                                  key: Key(user.id.toString()),
+                    ? ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: users.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final user = users[index];
+                    return Dismissible(
+                        key: Key(user.id.toString()),
 
-                                  /// todo delete user
-                                  confirmDismiss: (direction) async {
-                                    return await dialogDeleteConfirm(
-                                        user.id.toString());
-                                  },
-                                  background: deleteBg(),
-                                  child: Container(
-                                    margin: EdgeInsets.only(bottom: 10),
-                                    child: ListTile(
-                                      leading: CircleAvatar(
-                                        radius: 30.0,
-                                        backgroundImage:
-                                            NetworkImage(user.avatar),
-                                        backgroundColor: Colors.transparent,
-                                      ),
-                                      tileColor: Colors.red[200],
-                                      title: Text(
-                                          '${user.firstName} ${user.lastName}',
-                                          style:
-                                              TextStyle(color: Colors.white)),
-                                    ),
-                                  ));
-                            },
-                          )
-                        : Container(),
+                        /// todo delete user
+                        confirmDismiss: (direction) async {
+                          return await dialogDeleteConfirm(
+                              user.id.toString());
+                        },
+                        background: deleteBg(),
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 10),
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              radius: 30.0,
+                              backgroundImage:
+                              NetworkImage(user.avatar),
+                              backgroundColor: Colors.transparent,
+                            ),
+                            tileColor: Colors.red[200],
+                            title: Text(
+                                '${user.firstName} ${user.lastName}',
+                                style:
+                                TextStyle(color: Colors.white)),
+                          ),
+                        ));
+                  },
+                )
+                    : Container(),
               ],
             ),
           ),
@@ -182,47 +188,53 @@ class _UserListState extends State<UserList> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-              elevation: 10,
-              title: Text('Delete User'),
-              titlePadding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-              contentPadding: EdgeInsets.symmetric(horizontal: 10),
-              content: Text('Are you Sure?'),
-              actions: [
-                Container(
-                  width: MediaQuery.of(context).size.width * .90,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      InkWell(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                            ),
-                          ),
-                          onTap: () {
-                            deleteUser(userId).whenComplete(
-                                () => Navigator.of(context).pop(true));
-                            displaySnackBar('your user is deleted');
-                          }),
-                      InkWell(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.close,
-                              color: Colors.green,
-                            ),
-                          ),
-                          onTap: () {
-                            getListUser();
-                            Navigator.of(context).pop(false);
-                          }),
-                    ],
-                  ),
-                ),
-              ],
-            ) ??
+          elevation: 10,
+          title: Text('Delete User'),
+          titlePadding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+          content: Text('Are you Sure?'),
+          actions: [
+            Container(
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width * .90,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                      ),
+                      onTap: () {
+                        deleteUser(userId).whenComplete(
+                                () {
+                              Navigator.of(context).pop(true);
+                              displaySnackBar
+                                ('your user is deleted');
+                            });
+                      }),
+                  InkWell(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.close,
+                          color: Colors.green,
+                        ),
+                      ),
+                      onTap: () {
+                        getListUser();
+                        Navigator.of(context).pop(false);
+                      }),
+                ],
+              ),
+            ),
+          ],
+        ) ??
             false;
       },
     );
