@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
 part 'user.g.dart';
-
+/// using json serialiable to decode/encode the json data
 @JsonSerializable()
 class User {
   @JsonKey(name : "id")

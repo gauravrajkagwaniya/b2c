@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-
+/// using dio for Api to use method like , get, put, post, delete update
 class APIService {
   Dio _dio;
   String BASE_URL = 'https://reqres.in/';
