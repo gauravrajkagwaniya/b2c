@@ -67,7 +67,7 @@ Future deleteUser(String id) async{
     // final cloud = Provider.of<List<Cloud>>(context) ?? [];
     return Scaffold(
       key: _scaffoldKey,
-      backgroundColor: Colors.transparent,
+      // backgroundColor: Colors.transparent,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -83,7 +83,7 @@ Future deleteUser(String id) async{
         onRefresh: () async {
           await refreshList();
         },
-        child: SingleChildScrollView(
+        child: SingleChildScrollView(physics: BouncingScrollPhysics(),
           child: Container(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
