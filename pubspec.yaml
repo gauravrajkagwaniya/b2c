@@ -83,5 +83,5 @@ flutter_icons:
 
 flutter_native_splash:
   image: assets/icons/logo.png
-  color: "ffffff"
+  color: "faffed"
   android_disable_fullscreen: true
